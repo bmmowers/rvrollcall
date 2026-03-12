@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>RVF Emergency Roll Call</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1B3A5C;
+    --navy-dark: #122842;
+    --teal: #0D8A72;
+    --teal-light: #10A888;
+    --orange: #E8792B;
+    --bg: #0F1A24;
+    --surface: #162333;
+    --surface-hover: #1C2D40;
+    --border: #253A50;
+    --text: #E8ECF1;
+    --text-dim: #8899AA;
+    --text-muted: #5A6E80;
+    --present-bg: rgba(13, 138, 114, 0.08);
+    --danger: #D64545;
+    --danger-bg: rgba(214, 69, 69, 0.08);
+    --offsite-bg: rgba(90, 110, 128, 0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--navy-dark); border-bottom: 1px solid var(--border);
+    padding: 12px 16px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .header-brand { display: flex; align-items: center; gap: 10px; }
+  .header-logo {
+    width: 36px; height: 36px; background: var(--teal); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 14px; color: #fff;
+  }
+  .header-title { font-weight: 700; font-size: 16px; letter-spacing: -0.3px; }
+  .header-sub { font-size: 11px; color: var(--text-dim); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+  .btn-icon {
+    width: 38px; height: 38px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text-dim);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.15s; font-size: 16px;
+  }
+  .btn-icon:hover { background: var(--surface-hover); color: var(--text); }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    display: none; position: sticky; top: 63px; z-index: 99;
+    background: var(--navy-dark); border-bottom: 1px solid var(--border);
+    padding: 10px 16px; gap: 10px; align-items: center; flex-wrap: wrap;
+  }
+  .stats-bar.visible { display: flex; }
+  .stat-pill {
+    display: flex; align-items: center; gap: 5px;
+    padding: 3px 8px; border-radius: 6px;
+    font-size: 12px; font-weight: 600; font-family: 'IBM Plex Mono', monospace;
+  }
+  .stat-pill.accounted { background: var(--present-bg); color: var(--teal-light); }
+  .stat-pill.remaining { background: var(--danger-bg); color: var(--danger); }
+  .stat-pill.offsite-pill { background: var(--offsite-bg); color: var(--text-muted); }
+  .stat-pill .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .stat-pill.accounted .dot { background: var(--teal); }
+  .stat-pill.remaining .dot { background: var(--danger); }
+  .stat-pill.offsite-pill .dot { background: var(--text-muted); }
+  .stat-progress { flex: 1; min-width: 60px; height: 6px; border-radius: 3px; background: var(--surface); overflow: hidden; }
+  .stat-progress-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--teal), var(--teal-light)); transition: width 0.4s ease; width: 0%; }
+  .stat-time { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: var(--orange); min-width: 50px; text-align: right; }
+  .stat-zone-label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* ── LANDING ── */
+  .landing {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: calc(100vh - 64px); padding: 32px 20px; text-align: center;
+  }
+  .landing-icon {
+    width: 80px; height: 80px; border-radius: 22px;
+    background: linear-gradient(135deg, var(--navy), var(--surface));
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px; margin-bottom: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .landing h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 6px; }
+  .landing p { font-size: 14px; color: var(--text-dim); max-width: 360px; line-height: 1.5; margin-bottom: 28px; }
+
+  /* Zone picker */
+  .zone-section { width: 100%; max-width: 400px; margin-bottom: 20px; }
+  .zone-label { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .zone-grid { display: flex; flex-direction: column; gap: 6px; }
+  .zone-btn {
+    padding: 12px 16px; border: 1px solid var(--border); border-radius: 10px;
+    background: var(--surface); color: var(--text); text-align: left;
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .zone-btn:hover { background: var(--surface-hover); border-color: var(--teal); }
+  .zone-btn.selected { background: rgba(13,138,114,0.1); border-color: var(--teal); color: var(--teal-light); }
+  .zone-count { font-size: 12px; color: var(--text-muted); font-family: 'IBM Plex Mono', monospace; }
+  .zone-btn.selected .zone-count { color: var(--teal); }
+
+  /* Day picker */
+  .day-section { margin-bottom: 20px; }
+  .day-label { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .day-picker { display: flex; gap: 4px; }
+  .day-btn {
+    width: 40px; height: 34px; border: 1px solid var(--border); border-radius: 6px;
+    background: var(--surface); color: var(--text-dim);
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .day-btn:hover { background: var(--surface-hover); color: var(--text); }
+  .day-btn.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+
+  .btn-start {
+    width: 100%; max-width: 400px; padding: 16px 24px; border: none; border-radius: 12px;
+    background: linear-gradient(135deg, var(--orange), #D06A22); color: #fff;
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(232,121,43,0.3);
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;
+  }
+  .btn-start:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(232,121,43,0.4); }
+  .btn-start:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  .load-section { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 8px; }
+  .btn-load {
+    padding: 8px 16px; border: 1px dashed var(--border); border-radius: 8px;
+    background: transparent; color: var(--text-dim);
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; font-weight: 500;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .btn-load:hover { border-color: var(--teal); color: var(--teal); }
+  .load-hint { font-size: 10px; color: var(--text-muted); max-width: 300px; }
+  .roster-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: 600; margin-top: 8px;
+  }
+  .roster-badge.demo { background: rgba(232,121,43,0.1); color: var(--orange); }
+  .roster-badge.loaded { background: var(--present-bg); color: var(--teal-light); }
+
+  /* ── ROLL CALL VIEW ── */
+  .rollcall { display: none; padding: 0 0 100px; }
+  .rollcall.active { display: block; }
+
+  .search-bar { position: sticky; top: 99px; z-index: 98; padding: 8px 16px; background: var(--bg); }
+  .search-wrapper { position: relative; }
+  .search-input {
+    width: 100%; padding: 10px 14px 10px 36px;
+    border: 1px solid var(--border); border-radius: 10px;
+    background: var(--surface); color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 14px;
+    outline: none; transition: border-color 0.15s;
+  }
+  .search-input::placeholder { color: var(--text-muted); }
+  .search-input:focus { border-color: var(--teal); }
+  .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 14px; pointer-events: none; }
+
+  .filter-bar { display: flex; align-items: center; justify-content: space-between; padding: 6px 16px; gap: 8px; }
+  .filter-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+  .filter-toggle input { display: none; }
+  .toggle-track {
+    width: 36px; height: 20px; border-radius: 10px; background: var(--border);
+    position: relative; transition: background 0.2s;
+  }
+  .toggle-track::after {
+    content: ''; position: absolute; top: 2px; left: 2px;
+    width: 16px; height: 16px; border-radius: 50%; background: var(--text-dim); transition: all 0.2s;
+  }
+  .filter-toggle input:checked + .toggle-track { background: var(--teal); }
+  .filter-toggle input:checked + .toggle-track::after { left: 18px; background: #fff; }
+  .toggle-label { font-size: 12px; color: var(--text-dim); font-weight: 500; }
+  .filter-day-display {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--text-muted);
+    padding: 2px 7px; background: var(--surface); border-radius: 4px; border: 1px solid var(--border);
+  }
+
+  /* ── DEPARTMENTS ── */
+  .dept-section { margin: 6px 12px 12px; }
+  .dept-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 12px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px 10px 0 0; cursor: pointer; user-select: none;
+  }
+  .dept-header:hover { background: var(--surface-hover); }
+  .dept-name { font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.6px; display: flex; align-items: center; gap: 8px; }
+  .dept-name .chevron { font-size: 10px; color: var(--text-muted); transition: transform 0.2s; }
+  .dept-header.collapsed .chevron { transform: rotate(-90deg); }
+  .dept-counter { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; }
+  .dept-counter .present-count { color: var(--teal-light); }
+  .dept-counter .total-count { color: var(--text-muted); }
+  .dept-list { border: 1px solid var(--border); border-top: none; border-radius: 0 0 10px 10px; overflow: hidden; }
+  .dept-header.collapsed + .dept-list { display: none; }
+
+  /* ── EMPLOYEE ROW ── */
+  .emp-row {
+    display: flex; align-items: center; padding: 11px 14px;
+    border-bottom: 1px solid rgba(37,58,80,0.5);
+    cursor: pointer; transition: all 0.15s; user-select: none; gap: 10px;
+  }
+  .emp-row:last-child { border-bottom: none; }
+  .emp-row:hover { background: var(--surface-hover); }
+  .emp-check {
+    width: 24px; height: 24px; border-radius: 6px; border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: all 0.2s; font-size: 13px; color: transparent;
+  }
+  .emp-row.checked .emp-check { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .emp-name { font-size: 14px; font-weight: 500; transition: all 0.2s; flex: 1; }
+  .emp-row.checked .emp-name { text-decoration: line-through; color: var(--text-muted); }
+  .emp-time { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--teal); opacity: 0; transition: opacity 0.2s; }
+  .emp-row.checked .emp-time { opacity: 1; }
+  .emp-row.offsite { opacity: 0.35; background: var(--offsite-bg); }
+  .emp-row.offsite .emp-name { font-style: italic; }
+  .emp-badge { font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.4px; flex-shrink: 0; }
+  .emp-badge.off { background: rgba(90,110,128,0.15); color: var(--text-muted); }
+  .emp-badge.remote { background: rgba(90,110,128,0.15); color: var(--text-muted); }
+  .offsite-divider {
+    padding: 5px 14px; font-size: 10px; font-weight: 600; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.8px; background: rgba(90,110,128,0.05);
+    border-bottom: 1px solid rgba(37,58,80,0.5);
+  }
+
+  /* ── FABS ── */
+  .export-fab {
+    display: none; position: fixed; bottom: 20px; right: 20px;
+    padding: 12px 20px; border: none; border-radius: 12px; background: var(--teal); color: #fff;
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; font-weight: 700;
+    cursor: pointer; box-shadow: 0 4px 20px rgba(13,138,114,0.4); z-index: 200; transition: all 0.2s;
+  }
+  .export-fab.visible { display: flex; align-items: center; gap: 6px; }
+  .export-fab:hover { transform: translateY(-2px); }
+  .reset-fab {
+    display: none; position: fixed; bottom: 20px; left: 20px;
+    padding: 12px 16px; border: 1px solid var(--border); border-radius: 12px;
+    background: var(--surface); color: var(--danger);
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; font-weight: 600;
+    cursor: pointer; z-index: 200;
+  }
+  .reset-fab.visible { display: block; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px); z-index: 300; align-items: center; justify-content: center; padding: 16px;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+    width: 100%; max-width: 500px; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .modal-header { padding: 16px 20px 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .modal-header h2 { font-size: 17px; font-weight: 700; }
+  .modal-close { width: 32px; height: 32px; border: none; border-radius: 8px; background: transparent; color: var(--text-dim); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .modal-body { padding: 14px 20px; }
+  .export-preview {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; line-height: 1.6;
+    color: var(--text-dim); white-space: pre-wrap; max-height: 300px; overflow-y: auto;
+  }
+  .modal-footer { padding: 10px 20px 18px; display: flex; gap: 8px; }
+  .btn-export {
+    flex: 1; padding: 11px; border: none; border-radius: 10px;
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-export.primary { background: var(--teal); color: #fff; }
+  .btn-export.primary:hover { background: var(--teal-light); }
+  .btn-export.secondary { background: var(--navy); color: var(--text); border: 1px solid var(--border); }
+
+  .copy-toast {
+    display: none; position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
+    padding: 10px 20px; background: var(--teal); color: #fff; border-radius: 8px;
+    font-size: 13px; font-weight: 600; z-index: 400; animation: toastIn 0.3s ease;
+  }
+  .copy-toast.show { display: block; }
+  @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(-8px); } }
+  @media (min-width: 600px) {
+    .rollcall, .search-bar, .filter-bar { max-width: 600px; margin-left: auto; margin-right: auto; }
+  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .dept-section { animation: fadeUp 0.25s ease both; }
+  .dept-section:nth-child(2) { animation-delay: 0.04s; }
+  .dept-section:nth-child(3) { animation-delay: 0.08s; }
+  .dept-section:nth-child(4) { animation-delay: 0.12s; }
+  .dept-section:nth-child(5) { animation-delay: 0.16s; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-brand">
+    <div class="header-logo">RV</div>
+    <div>
+      <div class="header-title">Emergency Roll Call</div>
+      <div class="header-sub">River Valley Foods</div>
+    </div>
+  </div>
+  <div>
+    <button class="btn-icon" id="btnReset" title="Reset" style="display:none;">&#x21bb;</button>
+  </div>
+</div>
+
+<div class="stats-bar" id="statsBar">
+  <div class="stat-zone-label" id="statZoneLabel"></div>
+  <div class="stat-pill accounted"><span class="dot"></span><span id="statPresent">0</span></div>
+  <div class="stat-progress"><div class="stat-progress-fill" id="statProgressFill"></div></div>
+  <div class="stat-pill remaining"><span class="dot"></span><span id="statRemaining">0</span></div>
+  <span id="statOffsiteWrap" style="display:none;"><div class="stat-pill offsite-pill"><span class="dot"></span><span id="statOffsite">0</span> off</div></span>
+  <div class="stat-time" id="statTimer">00:00</div>
+</div>
+
+<!-- LANDING -->
+<div class="landing" id="landing">
+  <div class="landing-icon">&#x1F6A8;</div>
+  <h1>Roll Call</h1>
+  <p>Select your muster zone and day, then start roll call.</p>
+
+  <div class="zone-section">
+    <div class="zone-label">Select Muster Zone</div>
+    <div class="zone-grid" id="zoneGrid"></div>
+  </div>
+
+  <div class="day-section">
+    <div class="day-label">Drill Day (for schedule filtering)</div>
+    <div class="day-picker" id="dayPicker"></div>
+  </div>
+
+  <button class="btn-start" id="btnStart" disabled>Select a Zone to Begin</button>
+
+  <div class="load-section">
+    <button class="btn-load" id="btnLoadFile">&#x1F4C1; Load Custom Roster CSV</button>
+    <div class="load-hint">Accepts: Payroll Name, Home Dept. Description, Schedules columns</div>
+    <input type="file" id="fileInput" accept=".csv" style="display:none;">
+    <div class="roster-badge demo" id="rosterBadge">Feb 2026 roster — 223 employees</div>
+  </div>
+</div>
+
+<!-- ROLL CALL -->
+<div class="rollcall" id="rollcall">
+  <div class="search-bar"><div class="search-wrapper">
+    <span class="search-icon">&#x1F50D;</span>
+    <input type="text" class="search-input" id="searchInput" placeholder="Search by name...">
+  </div></div>
+  <div class="filter-bar">
+    <label class="filter-toggle">
+      <input type="checkbox" id="scheduleFilter" checked>
+      <span class="toggle-track"></span>
+      <span class="toggle-label">Expected on-site only</span>
+    </label>
+    <span class="filter-day-display" id="filterDayDisplay"></span>
+  </div>
+  <div id="deptContainer"></div>
+</div>
+
+<button class="export-fab" id="exportFab">&#x1F4CB; Export</button>
+<button class="reset-fab" id="resetFab">Reset</button>
+
+<div class="modal-overlay" id="exportModal">
+  <div class="modal">
+    <div class="modal-header"><h2>Drill Report</h2><button class="modal-close" id="modalClose">&times;</button></div>
+    <div class="modal-body"><div class="export-preview" id="exportPreview"></div></div>
+    <div class="modal-footer">
+      <button class="btn-export secondary" id="btnCopyExport">Copy</button>
+      <button class="btn-export primary" id="btnDownloadExport">Download .txt</button>
+    </div>
+  </div>
+</div>
+<div class="copy-toast" id="copyToast">Copied!</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// ROSTER DATA — Feb 2026 EEP Roster
+// In production: fetch('roster.csv') from GitHub Pages repo
+// ═══════════════════════════════════════════════════════════
+const ROSTER_DATA = {
+  "Court Street Office (Zone 1)": [
+    { name: "Manz, Gina", department: "Executive", schedule: "Mon - Fri" },
+    { name: "Redmond, Garrett", department: "Executive", schedule: "Mon - Fri" },
+    { name: "Redmond, Gerard", department: "Executive", schedule: "Mon - Fri" },
+    { name: "Kopack, Nicole", department: "Admin/HR", schedule: "Mon - Fri" },
+    { name: "Krdzic, Mehudin", department: "HR Director", schedule: "Mon - Fri" },
+    { name: "Montroy, Linda", department: "Admin/HR", schedule: "Mon - Fri" },
+    { name: "Pollock, Mark", department: "Admin/HR", schedule: "Mon - Fri" },
+    { name: "Graham, Alex", department: "Customer Service", schedule: "Mon - Fri" },
+    { name: "Jones, Zeruiah", department: "Customer Service", schedule: "Sun - Thurs" },
+    { name: "May, Lindsey", department: "Customer Service", schedule: "Mon - Fri" },
+    { name: "Saia, Heather", department: "Customer Service Lead", schedule: "Mon. - Fri." },
+    { name: "Bobbette, Lauren H.", department: "Sales", schedule: "Mon - Fri Remote Fri" },
+    { name: "Bonkowski, Leslie A", department: "Sales", schedule: "Mon - Fri Remonte Tues" },
+    { name: "Cappelli, Patricia A", department: "Sales", schedule: "Mon - Fri Remote Thurs" },
+    { name: "DiCicco, Julia", department: "Sales", schedule: "Mon - Fri" },
+    { name: "Hilty, Alicia Nicole", department: "Sales", schedule: "Mon - Fri Remote Mon" },
+    { name: "Freeman, Emily", department: "Sales", schedule: "Mon - Fri Remote Tues" },
+    { name: "Lalone, Francis", department: "Sales", schedule: "Mon - Fri Remote Mon" },
+    { name: "Greenwood, Amber M", department: "Sales", schedule: "Mon - Fri Remote Fri" },
+    { name: "Malagisi, Jill K", department: "Sales", schedule: "Mon - Fri Remote Fri" },
+    { name: "Minnegan, Thomas J", department: "Sales", schedule: "Tues & Thurs" },
+    { name: "Shute, Stephanie N", department: "Sales", schedule: "Mon - Fri Remote Wed" },
+    { name: "Vanhorn, Dale", department: "Sales", schedule: "Mon - Fri Remote Mon & Fri" },
+    { name: "Cannella, James R", department: "Purchasing", schedule: "Mon - Fri." },
+    { name: "Davis, Bradley P.", department: "Purchasing", schedule: "Mon - Fri Remote Thurs(Not Weekly)" },
+    { name: "Dziok, Lisa", department: "Purchasing", schedule: "Mon - Fri Remote Mon" },
+    { name: "Jackson, Jordan", department: "Purchasing", schedule: "Mon - Fri Remote Fri" },
+    { name: "Kemp, Steven", department: "Purchasing", schedule: "Mon - Fri" },
+    { name: "Knapp, Ryan", department: "Purchasing", schedule: "Mon - Fri Remote Wed" },
+    { name: "MacBride-Matthews, Lisa", department: "Purchasing", schedule: "Mon - Fri Remote Thurs" },
+    { name: "Nicholson, Ruth", department: "Purchasing", schedule: "Mon - Fri Remote Mon" },
+    { name: "Rosbrook, Jenna", department: "Purchasing", schedule: "Mon - Fri Remote Mon" },
+    { name: "Sickles, Todd", department: "Purchasing", schedule: "Mon - Fri" },
+    { name: "Thomas, Andrew M", department: "Purchasing", schedule: "Mon - Fri" },
+    { name: "Browne, Alexander", department: "Transportation Manager", schedule: "Mon - Fri" },
+    { name: "Capsello, Greg", department: "Transportation Coordinator", schedule: "Mon - Fri" },
+    { name: "Jaeger, Laura", department: "Food Safety Specialist", schedule: "Mon - Fri" },
+    { name: "Berry, Jeff", department: "Lead Delivery Driver", schedule: "Intermittent" },
+    { name: "Mowers, Brett M", department: "Director of Compliance", schedule: "Mon - Fri" },
+    { name: "Berda, Jeff", department: "Inventory Control Manager", schedule: "Mon - Fri" },
+  ],
+  "Court Street Warehouse (Zone 2)": [
+    { name: "Manz, Marcus", department: "Warehouse Operations Manager", schedule: "Mon - Fri" },
+    { name: "Reed, Larry", department: "Warehouse Manager", schedule: "Mon - Fri" },
+    { name: "Bourlier, David", department: "Inventory Control Specialist", schedule: "Mon - Fri" },
+    { name: "Tilton, Scott", department: "Inventory Control Specialist", schedule: "Mon - Fri" },
+    { name: "Bell, James M", department: "Warehouse First Shift", schedule: "Mon - Fri" },
+    { name: "Buccina, Mark", department: "Production Team Lead", schedule: "Mon - Fri" },
+    { name: "Burkert, Kyle", department: "Production", schedule: "Mon - Fri" },
+    { name: "Clarke, Christopher", department: "Warehouse First Shift", schedule: "Mon - Fri" },
+    { name: "Conners, Jason", department: "Warehouse First Shift", schedule: "Mon - Thurs" },
+    { name: "Cooper, Michael", department: "Warehouse First Shift", schedule: "Mon - Fri" },
+    { name: "Cummings, Russell", department: "Warehouse First Shift", schedule: "Sun - Wed" },
+    { name: "Foster, Jeffrey", department: "Warehouse First Shift Lead", schedule: "Wed - Sat" },
+    { name: "Grems, Anthony", department: "Warehouse First Shift", schedule: "Mon - Fri" },
+    { name: "Ibrahim, Edres", department: "Warehouse First Shift", schedule: "Tues, Thurs, Fri, Sat" },
+    { name: "Jahe, Win", department: "Warehouse First Shift", schedule: "Mon - Fri" },
+    { name: "LaLone, Alex", department: "Warehouse First Shift", schedule: "Mon - Fri" },
+    { name: "Lawson, Alex J", department: "Warehouse First Shift", schedule: "Mon - Fri" },
+    { name: "Marketos, Crystal", department: "Production", schedule: "Mon - Fri" },
+    { name: "McGee, Chris", department: "Warehouse First Shift", schedule: "Mon - Fri" },
+    { name: "Monds, Kevin", department: "Warehouse First Shift", schedule: "Mon - Fri" },
+    { name: "Reddish, Rickie", department: "Warehouse First Shift", schedule: "Mon - Fri" },
+    { name: "Reynolds, Aaron", department: "Warehouse First Shift Lead", schedule: "Sun, Mon, Tues, Fri" },
+    { name: "Rivera, Christina M", department: "Warehouse First Shift", schedule: "Sun - Wed" },
+    { name: "Rhode, Brandon", department: "Warehouse First Shift", schedule: "Mon - Fri" },
+    { name: "Severance, Jeffery", department: "Warehouse First Shift", schedule: "Mon - Fri" },
+    { name: "Thomas, Trevor E.", department: "Warehouse First Shift", schedule: "Sat & Sun" },
+    { name: "Trumble, Desirae", department: "Warehouse First Shift", schedule: "Mon, Wed, Thurs, Sat" },
+    { name: "Velazquez, Eliezer", department: "Warehouse First Shift", schedule: "Sun, Wed, Thurs, Fri" },
+    { name: "Whitt, Kalob", department: "Warehouse First Shift", schedule: "Sun - Wed" },
+    { name: "Woodworth-Day, Abryelle", department: "Warehouse First Shift", schedule: "Mon - Fri" },
+    { name: "Messere, Jeremy", department: "Maintenance Supervisor", schedule: "Multi-Site" },
+    { name: "Barbour, Ali", department: "Facilities Technician", schedule: "Multi-Site" },
+    { name: "Mautz, Gilbert", department: "Facilities Technician", schedule: "Multi-Site" },
+    { name: "Fogg, Dennis", department: "1st Shift Sanitation", schedule: "Sun - Thurs" },
+    { name: "Jackson, Kaseam", department: "1st Shift Sanitation", schedule: "Mon - Fri" },
+    { name: "Abdullah, Mohammed", department: "Warehouse Second Shift", schedule: "Tues, Wed, Thurs, Sat" },
+    { name: "Ahmad, Hussein", department: "Warehouse Second Shift", schedule: "Mon, Wed, Thurs, Sat" },
+    { name: "Ahmadi, Anosh", department: "Warehouse Second Shift", schedule: "Sun - Thurs" },
+    { name: "Aladawi, Omran", department: "Warehouse Second Shift", schedule: "Sun, Mon, Wed, Thurs" },
+    { name: "Amisi, Songolo", department: "Warehouse Second Shift", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Anaya Rondon, Luis", department: "Warehouse Second Shift", schedule: "Sun - Thurs" },
+    { name: "Aung, Thein", department: "Warehouse Second Shift", schedule: "Tues, Wed, Thurs, Sat" },
+    { name: "Bartolotta, Anthony", department: "Warehouse Second Shift", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Barzee, Justin", department: "Warehouse Second Shift", schedule: "Tues- Thurs & Sat" },
+    { name: "Ble, Hsa", department: "Warehouse Second Shift", schedule: "Sun, Mon, Tues, Sat" },
+    { name: "Caiza, Yessenia", department: "Warehouse Second Shift", schedule: "Sun, Tues, Wed, Thurs, Sat" },
+    { name: "Dansby, Miranda", department: "Warehouse Second Shift", schedule: "Sun, Mon, Wed, Thurs" },
+    { name: "Dawrani, Sanawullah", department: "Warehouse Second Shift", schedule: "Sun, Mon, Thurs, Sat" },
+    { name: "Diaz, Dayron", department: "Warehouse Second Shift", schedule: "Sun, Mon, Tues, Thurs" },
+    { name: "Ebuela, Tresor", department: "Warehouse Second Shift", schedule: "Tues, Wed, Thurs, Sat" },
+    { name: "Georges, James", department: "Warehouse Second Shift Lead", schedule: "Tues - Thurs & Sat" },
+    { name: "Gomez Ortega, Dioni", department: "Warehouse Second Shift", schedule: "Tues, Wed, Thurs, Sat" },
+    { name: "Gomez Ortega, Diobi", department: "Warehouse Second Shift", schedule: "Tues, Wed, Thurs, Sat" },
+    { name: "Gomez Rosabal, Marielys", department: "Warehouse Second Shift", schedule: "Tues, Wed, Thurs, Sat" },
+    { name: "Hakimi, Mohammad", department: "Warehouse Second Shift", schedule: "Sun - Thurs" },
+    { name: "Hartung IV, Andrew F", department: "Warehouse Second Shift Lead", schedule: "Mon - Wed & Sat" },
+    { name: "Hiderashko, Vladyslav", department: "Warehouse Second Shift", schedule: "Sun, Mon, Wed, Thurs" },
+    { name: "Hiraldo, Olga", department: "Warehouse Second Shift", schedule: "Sun - Thurs" },
+    { name: "Holmes, Soriah", department: "Warehouse Second Shift", schedule: "Mon - Thurs" },
+    { name: "Humeniuk, Volodymyr", department: "Warehouse Second Shift", schedule: "Sun, Mon, Tues, Thurs" },
+    { name: "Ismail Haroun, Oussam Ahamat", department: "Warehouse Second Shift", schedule: "Tues, Wed, Thurs, Sat" },
+    { name: "Karangwa, Vincent", department: "Warehouse Second Shift", schedule: "Sun - Thurs" },
+    { name: "Khalil, Wahidullah", department: "Warehouse Second Shift", schedule: "Sun, Tues, Sat" },
+    { name: "Looby, Brendan", department: "Warehouse Second Shift", schedule: "Sun - Wed" },
+    { name: "Manan, Qauomi Abdul", department: "Warehouse Second Shift", schedule: "Sun, Mon, Thurs, Sat" },
+    { name: "Mari, Toli", department: "Warehouse Second Shift", schedule: "Sun - Wed" },
+    { name: "Mark, Vicky", department: "Warehouse Second Shift", schedule: "Sun - Thurs" },
+    { name: "Marrero Fonseca, Alberto", department: "Warehouse Second Shift", schedule: "Tues, Wed, Thurs, Sat" },
+    { name: "Mendoza Perez, Angel", department: "Warehouse Second Shift", schedule: "Mon - Thurs" },
+    { name: "Mohamad Khalil, Mostafa", department: "Warehouse Second Shift", schedule: "Mon, Wed, Thurs, Sat" },
+    { name: "Mohammadi, Sonil", department: "Warehouse Second Shift", schedule: "Sun, Mon, Sat" },
+    { name: "Mtembwa, Mboko", department: "Warehouse Second Shift", schedule: "Sun - Wed" },
+    { name: "Mukhi, Shukrullah", department: "Warehouse Second Shift", schedule: "Sun, Mon, Thurs, Sat" },
+    { name: "Muradi, Azizullah", department: "Warehouse Second Shift", schedule: "Sun - Thurs" },
+    { name: "Muradi, Abdul", department: "Warehouse Second Shift", schedule: "Sun, Mon, Wed, Thurs" },
+    { name: "Murray, Patrick J", department: "Warehouse Second Shift", schedule: "Sun - Wed" },
+    { name: "Narvaez Rodriguez, Adoniesis", department: "Warehouse Second Shift", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Nazari, Najebullah", department: "Warehouse Second Shift", schedule: "Sun, Mon, Thurs, Sat" },
+    { name: "Niyongabo, Jean", department: "Warehouse Second Shift", schedule: "Sun - Wed" },
+    { name: "Rahmani, Amir Mohammad", department: "Warehouse Second Shift", schedule: "Sun - Wed" },
+    { name: "Rahmani, Juma Khan", department: "Warehouse Second Shift", schedule: "Sun, Mon, Thurs, Sat" },
+    { name: "Rodriguez, Leodan", department: "Warehouse Second Shift", schedule: "Tues, Wed, Thurs, Sat" },
+    { name: "Rodriguez, Deyaneira", department: "Warehouse Second Shift Lead", schedule: "Sun - Wed" },
+    { name: "Rwanika, Enock", department: "Warehouse Second Shift", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "sah nitcheu, Pierre Marie", department: "Warehouse Second Shift", schedule: "Sun - Wed" },
+    { name: "Sheerzad, Nurullah", department: "Warehouse Second Shift", schedule: "Sun, Mon, Thurs, Sat" },
+    { name: "Silveira Zamora, Roberto", department: "Warehouse Second Shift", schedule: "Tues, Wed, Thurs, Sat" },
+    { name: "Thomas Diaz, Edgar", department: "Warehouse Second Shift", schedule: "Sun - Wed" },
+    { name: "Toaquiza, Lupe", department: "Warehouse Second Shift", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Uwizeyimana, Deogene", department: "Warehouse Second Shift", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Vega, Leidy", department: "Warehouse Second Shift", schedule: "Sun, Tues, Wed, Thurs, Sat" },
+    { name: "Vives Almeida, Lazaro", department: "Warehouse Second Shift", schedule: "Sun - Wed" },
+    { name: "Williams, Kyon", department: "Warehouse Second Shift", schedule: "Tues, Wed, Thurs, Sat" },
+    { name: "Abdi, Mohamed", department: "2nd Shift Sanitation", schedule: "Mon, Tues, Wed, Thurs, Sat" },
+    { name: "Kamwanya, Fyfy", department: "2nd Shift Sanitation", schedule: "Sun - Thurs" },
+  ],
+  "RV Frozen": [
+    { name: "Wickard, Tobias", department: "Freezer Manager", schedule: "Mon - Fri" },
+    { name: "Sidmore, Peter J", department: "Freezer Team Lead", schedule: "Mon - Fri" },
+    { name: "Daniel, Eric", department: "Freezer 2nd Shift Team Lead", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Arocho, Teresa", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Bell, Robert W", department: "Frozen Warehouse", schedule: "Mon - Fri" },
+    { name: "Burden, Dustin", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Dishaw, Anthony", department: "Frozen Warehouse", schedule: "Sun - Thurs" },
+    { name: "Ferguson, Lila", department: "Frozen Warehouse", schedule: "Mon - Fri" },
+    { name: "Fletcher, Shawn", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Ford, Kyle", department: "Frozen Warehouse", schedule: "Mon - Fri" },
+    { name: "Garn, Jason", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Hatton, Shawn", department: "Frozen Warehouse", schedule: "Mon - Fri" },
+    { name: "Hemingway, John", department: "Frozen Warehouse", schedule: "Sun - Thurs" },
+    { name: "Hertel, Eric", department: "Frozen Warehouse", schedule: "Mon - Fri" },
+    { name: "Humure, Nkurunziza", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Ibrahim, Bajhat", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Igirimbabazi, Grace", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Jackson, Tyrone", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Jeannine, Mutesi", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Kirby, Morrell", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Leone, William", department: "Frozen Warehouse", schedule: "Sun - Thurs" },
+    { name: "Lewis, McCoy", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Lozano Garcia, Adanelis", department: "Frozen Warehouse", schedule: "Mon - Fri" },
+    { name: "Mannino, Jordan", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Martin, Kylia", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Martinez, Maria", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Michels, Mark", department: "Frozen Warehouse", schedule: "Sun - Thurs" },
+    { name: "Mugabushaka, Alphonse", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Ndebay, Salay", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Niyonkwizerwa, Faustin", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Nkubana, Dina", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Paternoster, Tim", department: "Frozen Warehouse", schedule: "Mon - Fri" },
+    { name: "Platts, Tanyshia", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Roberts, Byron", department: "Frozen Warehouse", schedule: "Sun - Thurs" },
+    { name: "Scott, Charles", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Shukuru, Germain", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Solange, Dorcas", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Soto Velazquez, Rahisha", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Spaulding, Josh", department: "Frozen Warehouse", schedule: "Sun - Thurs" },
+    { name: "Stienburg, Andrew", department: "Frozen Warehouse", schedule: "Sun - Thurs" },
+    { name: "Stienburg, Alexander", department: "Frozen Warehouse", schedule: "Sun - Thurs" },
+    { name: "Sullivan, James", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Sweet, Ryan", department: "Frozen Warehouse", schedule: "Mon - Fri" },
+    { name: "Torres, Thomas", department: "Frozen Warehouse", schedule: "Sun - Thurs" },
+    { name: "Uwajeneza, Seraphine", department: "Frozen Warehouse", schedule: "Sun, Tues, Wed, Thurs" },
+  ],
+  "Firestone Office": [
+    { name: "Redmond, John", department: "Executive", schedule: "Intermittent" },
+    { name: "Thompson, Devin", department: "Business Analyst", schedule: "Mon - Fri Remote Fri" },
+    { name: "White, Jane", department: "Financial Controller", schedule: "Intermittent" },
+    { name: "Beach, Lori", department: "AR Specialist", schedule: "Mon. - Fri." },
+    { name: "Burdick-Kerns, Autumne", department: "AR Specialist", schedule: "Mon. - Fri." },
+    { name: "Daniels, Kaylee", department: "AP Specialist", schedule: "Mon. - Fri." },
+    { name: "Dawson, Lisa", department: "AP Specialist", schedule: "Mon. - Fri." },
+    { name: "Hallett, Patricia J", department: "AP Specialist", schedule: "Tues - Thurs" },
+    { name: "Hubbard, Carolyn Frances", department: "AP Specialist", schedule: "Mon. - Fri." },
+    { name: "Indick, Michele", department: "AP Specialist", schedule: "Mon. - Fri." },
+    { name: "Matasar, Hillel", department: "Staff Accountant", schedule: "Mon. - Fri." },
+    { name: "Mitchell, Patricia", department: "AP Specialist", schedule: "Mon. - Fri." },
+    { name: "Morgan, Melissa", department: "Senior Accountant", schedule: "Mon. - Fri. Remote Wed" },
+    { name: "Penoyer, Amy", department: "AR Specialist", schedule: "Mon. - Fri." },
+    { name: "Werth, Adam J", department: "Clerical Specialist", schedule: "Tuesdays" },
+    { name: "Capozzi, Michael", department: "IT", schedule: "Mon - Fri" },
+    { name: "Hackworth, Adolphus", department: "IT", schedule: "Intermittent" },
+    { name: "LaPoint, Brandon", department: "IT", schedule: "Mon - Fri" },
+    { name: "Robertson, Orlando", department: "IT", schedule: "Mon - Fri" },
+    { name: "Wheelock, Glenn", department: "IT", schedule: "Mon - Fri" },
+    { name: "Kopack, John", department: "Purchasing/Logistics", schedule: "Mon. - Fri. Remote Mon" },
+    { name: "Reid, Mike", department: "Purchasing/Logistics", schedule: "Mon. - Fri. Remote Tues" },
+  ],
+  "H&W": [
+    { name: "Derek Fuss", department: "Health & Wellness Manager", schedule: "Mon - Fri" },
+    { name: "Ayubu, Abdurdhim", department: "Health & Wellness Team", schedule: "Sun, Mon, Wed, Sat" },
+    { name: "Bomboko, Alphonse", department: "Health & Wellness Team", schedule: "Tues, Wed, Thurs, Sat" },
+    { name: "Bradt, Natasha", department: "Health & Wellness Team", schedule: "Mon, Tues, Wed, Sat" },
+    { name: "Brown, Frederick", department: "Health & Wellness Team", schedule: "Wed, Thurs, Fri, Sat" },
+    { name: "Gamble, Richard C", department: "Health & Wellness Team Lead", schedule: "Tues, Wed, Thurs, Sat" },
+    { name: "Griffin, Adam", department: "Health & Wellness Team", schedule: "Sun, Mon, Wed, Thurs" },
+    { name: "Hashim, Mohammed", department: "Health & Wellness Team", schedule: "Mon, Tues, Thurs, Sat" },
+    { name: "Hatch, James", department: "Health & Wellness Team", schedule: "Mon - Fri" },
+    { name: "Ingabire, Chantal", department: "Health & Wellness Team", schedule: "Tues, Wed, Thurs, Sat" },
+    { name: "Joseph Minouche", department: "Health & Wellness Team", schedule: "Sun, Tues, Wed, Thurs" },
+    { name: "Kielb, Caitlyn", department: "Health & Wellness Team Lead", schedule: "Mon - Fri" },
+    { name: "Koko, Joshua", department: "Health & Wellness Team", schedule: "Sun, Mon, Wed, Thurs" },
+    { name: "McClure, Kane", department: "Health & Wellness Team", schedule: "Sun, Mon, Tues, Thurs" },
+    { name: "Mtumwa, Chance", department: "Health & Wellness Team", schedule: "Sun, Mon, Wed, Thurs" },
+    { name: "Mudagohokora, Oswaridi", department: "Health & Wellness Team", schedule: "Sun, Mon, Wed, Thurs" },
+    { name: "Nicolucci, Julie", department: "Health & Wellness Team", schedule: "Tues - Thurs & Sat" },
+    { name: "Rem, Mykhailo", department: "Health & Wellness Team", schedule: "Sun, Mon, Tues, Sat" },
+    { name: "Saya, Sabastiano", department: "Health & Wellness Team", schedule: "Sun, Mon, Wed, Thurs" },
+    { name: "Tyson, Tyger", department: "Health & Wellness Team", schedule: "Sun, Mon, Tues, Thurs" },
+    { name: "Ullah, Anayat", department: "Health & Wellness Team", schedule: "Sun, Tues, Wed, Thurs" },
+  ],
+};
+
+// ═══════════════════════════════════════════════════════════
+// SCHEDULE PARSER — handles all 45 HR schedule variations
+// ═══════════════════════════════════════════════════════════
+const DAY_MAP = { sun:0, mon:1, tue:2, tues:2, wed:3, thu:4, thur:4, thurs:4, fri:5, sat:6 };
+const DAY_NAMES_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const DAY_NAMES_FULL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+function parseDay(s) {
+  const clean = s.trim().toLowerCase().replace(/[^a-z]/g, '');
+  // Handle full day names like "tuesdays"
+  if (clean.startsWith('sunday')) return 0;
+  if (clean.startsWith('monday')) return 1;
+  if (clean.startsWith('tuesday')) return 2;
+  if (clean.startsWith('wednesday')) return 3;
+  if (clean.startsWith('thursday')) return 4;
+  if (clean.startsWith('friday')) return 5;
+  if (clean.startsWith('saturday')) return 6;
+  // Abbreviations
+  for (const [key, val] of Object.entries(DAY_MAP)) {
+    if (clean === key || clean.startsWith(key)) return val;
+  }
+  return -1;
+}
+
+function dayRange(startStr, endStr) {
+  const s = parseDay(startStr), e = parseDay(endStr);
+  if (s === -1 || e === -1) return null;
+  const days = [];
+  let d = s;
+  for (let i = 0; i < 7; i++) { days.push(d); if (d === e) break; d = (d + 1) % 7; }
+  return days;
+}
+
+function getOnsiteDays(schedStr) {
+  if (!schedStr || !schedStr.trim()) return null; // null = assume all days
+  let s = schedStr.trim();
+
+  // Special cases → always on-site
+  const lower = s.toLowerCase();
+  if (lower === 'intermittent' || lower === 'multi-site') return null;
+
+  // Remove "(Not Weekly)" or similar parenthetical — treat as on-site for that day
+  s = s.replace(/\(.*?\)/g, '').trim();
+
+  // Check for "Remote" pattern: "Mon - Fri Remote Mon & Fri"
+  const remoteMatch = s.match(/^(.+?)\s+(?:remote|remonte)\s+(.+)$/i);
+  if (remoteMatch) {
+    const baseDays = getOnsiteDays(remoteMatch[1]);
+    if (!baseDays) return null;
+    // Parse remote days (could be "Mon & Fri", "Tues", etc.)
+    const remotePart = remoteMatch[2];
+    const remoteDays = parseListedDays(remotePart);
+    return baseDays.filter(d => !remoteDays.includes(d));
+  }
+
+  // "Mon - Wed & Sat" or "Tues - Thurs & Sat" or "Tues- Thurs & Sat"
+  const rangeAndMatch = s.match(/^(.+?)\s*-\s*(.+?)\s*&\s*(.+)$/);
+  if (rangeAndMatch) {
+    const rangeDays = dayRange(rangeAndMatch[1], rangeAndMatch[2]);
+    const extraDays = parseListedDays(rangeAndMatch[3]);
+    if (rangeDays) return [...new Set([...rangeDays, ...extraDays])];
+  }
+
+  // Simple range: "Mon - Fri", "Sun - Thurs", "Mon. - Fri."
+  const rangeMatch = s.match(/^(.+?)\s*-\s*(.+?)\.?$/);
+  if (rangeMatch && !s.includes(',') && !s.includes('&')) {
+    const days = dayRange(rangeMatch[1], rangeMatch[2]);
+    if (days) return days;
+  }
+
+  // Comma/ampersand list: "Sun, Mon, Wed, Sat" or "Sat & Sun"
+  return parseListedDays(s);
+}
+
+function parseListedDays(s) {
+  const parts = s.split(/[,&]+/).map(p => p.trim()).filter(Boolean);
+  const days = [];
+  for (const p of parts) {
+    // Could be a small range like "Tues - Thurs" within a list
+    if (p.includes('-')) {
+      const rp = p.split('-').map(x => x.trim());
+      const rd = dayRange(rp[0], rp[1]);
+      if (rd) days.push(...rd);
+    } else {
+      const d = parseDay(p);
+      if (d !== -1) days.push(d);
+    }
+  }
+  return [...new Set(days)];
+}
+
+function isScheduledOnsite(emp, dayIndex) {
+  const days = getOnsiteDays(emp.schedule);
+  if (!days) return true; // null = always expected
+  return days.includes(dayIndex);
+}
+
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+let selectedZone = null;
+let selectedDay = new Date().getDay();
+let checkedSet = new Set();
+let checkTimes = {};
+let drillStartTime = null;
+let timerInterval = null;
+
+// DOM
+const landing = document.getElementById('landing');
+const rollcallView = document.getElementById('rollcall');
+const deptContainer = document.getElementById('deptContainer');
+const statsBar = document.getElementById('statsBar');
+const statPresent = document.getElementById('statPresent');
+const statRemaining = document.getElementById('statRemaining');
+const statOffsite = document.getElementById('statOffsite');
+const statOffsiteWrap = document.getElementById('statOffsiteWrap');
+const statProgressFill = document.getElementById('statProgressFill');
+const statTimer = document.getElementById('statTimer');
+const statZoneLabel = document.getElementById('statZoneLabel');
+const searchInput = document.getElementById('searchInput');
+const scheduleFilter = document.getElementById('scheduleFilter');
+const filterDayDisplay = document.getElementById('filterDayDisplay');
+const exportFab = document.getElementById('exportFab');
+const resetFab = document.getElementById('resetFab');
+const exportModal = document.getElementById('exportModal');
+const exportPreview = document.getElementById('exportPreview');
+const copyToast = document.getElementById('copyToast');
+const btnStart = document.getElementById('btnStart');
+const btnReset = document.getElementById('btnReset');
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+buildZonePicker();
+buildDayPicker();
+
+btnStart.addEventListener('click', startRollCall);
+document.getElementById('btnLoadFile').addEventListener('click', () => document.getElementById('fileInput').click());
+document.getElementById('fileInput').addEventListener('change', handleFileLoad);
+searchInput.addEventListener('input', () => renderDepartments(searchInput.value));
+scheduleFilter.addEventListener('change', () => { renderDepartments(searchInput.value); updateStats(); });
+exportFab.addEventListener('click', showExport);
+resetFab.addEventListener('click', resetRollCall);
+btnReset.addEventListener('click', resetRollCall);
+document.getElementById('modalClose').addEventListener('click', () => exportModal.classList.remove('active'));
+document.getElementById('btnCopyExport').addEventListener('click', copyExport);
+document.getElementById('btnDownloadExport').addEventListener('click', downloadExport);
+exportModal.addEventListener('click', (e) => { if (e.target === exportModal) exportModal.classList.remove('active'); });
+
+function buildZonePicker() {
+  const grid = document.getElementById('zoneGrid');
+  grid.innerHTML = '';
+  Object.keys(ROSTER_DATA).forEach(zone => {
+    const btn = document.createElement('button');
+    btn.className = 'zone-btn';
+    btn.innerHTML = `<span>${zone}</span><span class="zone-count">${ROSTER_DATA[zone].length}</span>`;
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedZone = zone;
+      btnStart.disabled = false;
+      btnStart.textContent = 'Start Roll Call';
+    });
+    grid.appendChild(btn);
+  });
+}
+
+function buildDayPicker() {
+  const picker = document.getElementById('dayPicker');
+  DAY_NAMES_SHORT.forEach((name, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'day-btn' + (idx === selectedDay ? ' active' : '');
+    btn.textContent = name;
+    btn.addEventListener('click', () => {
+      selectedDay = idx;
+      document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterDayDisplay.textContent = DAY_NAMES_FULL[idx];
+    });
+    picker.appendChild(btn);
+  });
+  filterDayDisplay.textContent = DAY_NAMES_FULL[selectedDay];
+}
+
+function getActiveRoster() { return ROSTER_DATA[selectedZone] || []; }
+
+// ═══════════════════════════════════════════════════════════
+// CSV LOADER
+// ═══════════════════════════════════════════════════════════
+function parseCSVLine(line) {
+  const fields = []; let cur = '', inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (inQ) { if (ch === '"' && line[i+1] === '"') { cur += '"'; i++; } else if (ch === '"') inQ = false; else cur += ch; }
+    else { if (ch === '"') inQ = true; else if (ch === ',') { fields.push(cur.trim()); cur = ''; } else cur += ch; }
+  }
+  fields.push(cur.trim());
+  return fields;
+}
+
+function handleFileLoad(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const lines = ev.target.result.trim().split(/\r?\n/);
+    if (lines.length < 2) return;
+    const header = parseCSVLine(lines[0]).map(h => h.toLowerCase().replace(/['"]/g, '').trim());
+    const ni = header.findIndex(h => h.includes('payroll') || h === 'name' || h === 'employee');
+    const di = header.findIndex(h => h.includes('dept') || h.includes('department') || h === 'division');
+    const si = header.findIndex(h => h.includes('schedule') || h === 'shift');
+    const zi = header.findIndex(h => h.includes('zone') || h.includes('location') || h.includes('site'));
+    if (ni === -1 || di === -1) { alert('Need "Payroll Name"/"Name" and "Home Dept. Description"/"Department" columns.'); return; }
+
+    const zoneMap = {};
+    for (let i = 1; i < lines.length; i++) {
+      const cols = parseCSVLine(lines[i]);
+      const name = cols[ni], dept = cols[di];
+      if (!name) continue;
+      const zone = zi !== -1 && cols[zi] ? cols[zi] : 'All Employees';
+      const sched = si !== -1 ? (cols[si] || '') : '';
+      if (!zoneMap[zone]) zoneMap[zone] = [];
+      zoneMap[zone].push({ name, department: dept, schedule: sched });
+    }
+
+    Object.keys(ROSTER_DATA).forEach(k => delete ROSTER_DATA[k]);
+    Object.assign(ROSTER_DATA, zoneMap);
+    buildZonePicker();
+    selectedZone = null;
+    btnStart.disabled = true;
+    btnStart.textContent = 'Select a Zone to Begin';
+    const total = Object.values(ROSTER_DATA).reduce((s, a) => s + a.length, 0);
+    const badge = document.getElementById('rosterBadge');
+    badge.className = 'roster-badge loaded';
+    badge.textContent = `✓ Custom roster — ${total} employees`;
+  };
+  reader.readAsText(file);
+}
+
+// ═══════════════════════════════════════════════════════════
+// ROLL CALL FLOW
+// ═══════════════════════════════════════════════════════════
+function startRollCall() {
+  if (!selectedZone) return;
+  landing.style.display = 'none';
+  rollcallView.classList.add('active');
+  statsBar.classList.add('visible');
+  exportFab.classList.add('visible');
+  resetFab.classList.add('visible');
+  btnReset.style.display = 'flex';
+  statZoneLabel.textContent = selectedZone;
+  filterDayDisplay.textContent = DAY_NAMES_FULL[selectedDay];
+  checkedSet.clear(); checkTimes = {};
+  drillStartTime = new Date();
+  startTimer(); renderDepartments(); updateStats();
+}
+
+function resetRollCall() {
+  if (!confirm('Reset roll call? All progress will be lost.')) return;
+  clearInterval(timerInterval);
+  rollcallView.classList.remove('active');
+  statsBar.classList.remove('visible');
+  exportFab.classList.remove('visible');
+  resetFab.classList.remove('visible');
+  btnReset.style.display = 'none';
+  landing.style.display = 'flex';
+  searchInput.value = ''; deptContainer.innerHTML = '';
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    const el = Math.floor((Date.now() - drillStartTime.getTime()) / 1000);
+    statTimer.textContent = `${String(Math.floor(el/60)).padStart(2,'0')}:${String(el%60).padStart(2,'0')}`;
+  }, 1000);
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════
+function renderDepartments(filter = '') {
+  deptContainer.innerHTML = '';
+  const roster = getActiveRoster();
+  const hideOffsite = scheduleFilter.checked;
+  const depts = {};
+
+  roster.forEach((emp, idx) => {
+    if (filter && !emp.name.toLowerCase().includes(filter.toLowerCase())) return;
+    if (!depts[emp.department]) depts[emp.department] = [];
+    depts[emp.department].push({ ...emp, idx, onSite: isScheduledOnsite(emp, selectedDay) });
+  });
+
+  Object.keys(depts).sort().forEach(dept => {
+    const all = depts[dept];
+    const onsite = all.filter(e => e.onSite);
+    const offsite = all.filter(e => !e.onSite);
+    const sortFn = (a, b) => { const d = (checkedSet.has(a.idx)?1:0) - (checkedSet.has(b.idx)?1:0); return d || a.name.localeCompare(b.name); };
+    onsite.sort(sortFn); offsite.sort(sortFn);
+
+    const checkedOnsite = onsite.filter(e => checkedSet.has(e.idx)).length;
+    let html = onsite.map(e => empRowHTML(e, false)).join('');
+    if (!hideOffsite && offsite.length > 0) {
+      html += `<div class="offsite-divider">Not scheduled (${offsite.length})</div>`;
+      html += offsite.map(e => empRowHTML(e, true)).join('');
+    }
+
+    const section = document.createElement('div');
+    section.className = 'dept-section';
+    section.innerHTML = `
+      <div class="dept-header"><div class="dept-name"><span class="chevron">&#x25BC;</span>${dept}</div>
+      <div class="dept-counter"><span class="present-count">${checkedOnsite}</span><span class="total-count"> / ${onsite.length}</span></div></div>
+      <div class="dept-list">${html}</div>`;
+    deptContainer.appendChild(section);
+  });
+
+  document.querySelectorAll('.dept-header').forEach(h => h.addEventListener('click', () => h.classList.toggle('collapsed')));
+  document.querySelectorAll('.emp-row').forEach(r => r.addEventListener('click', () => toggleEmployee(parseInt(r.dataset.idx))));
+}
+
+function empRowHTML(emp, off) {
+  const chk = checkedSet.has(emp.idx);
+  const cls = ['emp-row']; if (chk) cls.push('checked'); if (off) cls.push('offsite');
+  const time = chk && checkTimes[emp.idx] ? checkTimes[emp.idx].toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : '';
+  const badge = off ? '<span class="emp-badge off">OFF</span>' : '';
+  return `<div class="${cls.join(' ')}" data-idx="${emp.idx}"><div class="emp-check">${chk?'&#x2713;':''}</div><div class="emp-name">${emp.name}</div>${badge}<div class="emp-time">${time}</div></div>`;
+}
+
+function toggleEmployee(idx) {
+  if (checkedSet.has(idx)) { checkedSet.delete(idx); delete checkTimes[idx]; }
+  else { checkedSet.add(idx); checkTimes[idx] = new Date(); }
+  renderDepartments(searchInput.value); updateStats();
+}
+
+function updateStats() {
+  const roster = getActiveRoster();
+  const onsite = roster.filter((e, i) => isScheduledOnsite(e, selectedDay));
+  const offCount = roster.length - onsite.length;
+  const present = [...checkedSet].filter(i => isScheduledOnsite(roster[i], selectedDay)).length;
+  const remaining = onsite.length - present;
+  statPresent.textContent = present;
+  statRemaining.textContent = remaining;
+  statProgressFill.style.width = `${onsite.length > 0 ? (present/onsite.length)*100 : 0}%`;
+  if (offCount > 0) { statOffsiteWrap.style.display = 'inline'; statOffsite.textContent = offCount; }
+  else { statOffsiteWrap.style.display = 'none'; }
+}
+
+// ═══════════════════════════════════════════════════════════
+// EXPORT
+// ═══════════════════════════════════════════════════════════
+function generateReport() {
+  const now = new Date();
+  const el = Math.floor((now - drillStartTime) / 1000);
+  const roster = getActiveRoster();
+  const onsite = roster.filter(e => isScheduledOnsite(e, selectedDay));
+  const offsite = roster.filter(e => !isScheduledOnsite(e, selectedDay));
+
+  let r = `════════════════════════════════════════════\n`;
+  r += `  RIVER VALLEY FOODS — ROLL CALL REPORT\n`;
+  r += `════════════════════════════════════════════\n\n`;
+  r += `Zone:        ${selectedZone}\n`;
+  r += `Date:        ${now.toLocaleDateString()}\n`;
+  r += `Day:         ${DAY_NAMES_FULL[selectedDay]}\n`;
+  r += `Started:     ${drillStartTime.toLocaleTimeString()}\n`;
+  r += `Elapsed:     ${Math.floor(el/60)}m ${el%60}s\n`;
+  r += `Expected:    ${onsite.length} on-site\n`;
+  r += `Accounted:   ${checkedSet.size}\n`;
+  if (offsite.length) r += `Not Sched:   ${offsite.length}\n`;
+  r += '\n';
+
+  const depts = {};
+  onsite.forEach(emp => {
+    const idx = roster.indexOf(emp);
+    if (!depts[emp.department]) depts[emp.department] = [];
+    depts[emp.department].push({ ...emp, idx });
+  });
+
+  Object.keys(depts).sort().forEach(dept => {
+    const emps = depts[dept];
+    const ck = emps.filter(e => checkedSet.has(e.idx)).length;
+    r += `── ${dept.toUpperCase()} (${ck}/${emps.length}) ──\n`;
+    emps.sort((a,b) => a.name.localeCompare(b.name)).forEach(emp => {
+      const p = checkedSet.has(emp.idx);
+      const t = p && checkTimes[emp.idx] ? ` (${checkTimes[emp.idx].toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})})` : '';
+      r += `  ${p ? '✓ PRESENT    ' : '✗ UNACCOUNTED'}  ${emp.name}${t}\n`;
+    });
+    r += '\n';
+  });
+
+  const unacc = onsite.filter(e => !checkedSet.has(roster.indexOf(e)));
+  r += `════════════════════════════════════════════\n`;
+  if (unacc.length) {
+    r += `  ⚠ UNACCOUNTED PERSONNEL (${unacc.length})\n`;
+    r += `════════════════════════════════════════════\n`;
+    unacc.forEach(e => r += `  • ${e.name} — ${e.department}\n`);
+  } else {
+    r += `  ✓ ALL ON-SITE PERSONNEL ACCOUNTED FOR\n`;
+    r += `════════════════════════════════════════════\n`;
+  }
+
+  if (offsite.length) {
+    r += `\n── NOT SCHEDULED (${DAY_NAMES_FULL[selectedDay]}) ──\n`;
+    offsite.forEach(e => r += `  ○ ${e.name} — ${e.department} (${e.schedule})\n`);
+  }
+  return r;
+}
+
+function showExport() { exportPreview.textContent = generateReport(); exportModal.classList.add('active'); }
+function copyExport() { navigator.clipboard.writeText(generateReport()).then(() => { copyToast.classList.add('show'); setTimeout(() => copyToast.classList.remove('show'), 2000); }); }
+function downloadExport() {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([generateReport()], { type: 'text/plain' }));
+  a.download = `RVF_Roll_Call_${selectedZone.replace(/[^a-zA-Z0-9]/g,'_')}_${new Date().toISOString().slice(0,10)}.txt`;
+  a.click();
+}
+</script>
+</body>
+</html>
