@@ -1,0 +1,224 @@
+Payroll Name,Home Dept. Description,Schedules,Zone
+"Manz, Gina",Executive,Mon - Fri,Court Street Office (Zone 1)
+"Redmond, Garrett",Executive,Mon - Fri,Court Street Office (Zone 1)
+"Redmond, Gerard",Executive,Mon - Fri,Court Street Office (Zone 1)
+"Kopack, Nicole",Admin/HR,Mon - Fri,Court Street Office (Zone 1)
+"Krdzic, Mehudin",HR Director,Mon - Fri,Court Street Office (Zone 1)
+"Montroy, Linda",Admin/HR,Mon - Fri,Court Street Office (Zone 1)
+"Pollock, Mark",Admin/HR,Mon - Fri,Court Street Office (Zone 1)
+"Graham, Alex",Customer Service,Mon - Fri,Court Street Office (Zone 1)
+"Jones, Zeruiah",Customer Service,Sun - Thurs,Court Street Office (Zone 1)
+"May, Lindsey",Customer Service,Mon - Fri,Court Street Office (Zone 1)
+"Saia, Heather",Customer Service Lead,Mon. - Fri.,Court Street Office (Zone 1)
+"Bobbette, Lauren H.",Sales,Mon - Fri Remote Fri,Court Street Office (Zone 1)
+"Bonkowski, Leslie A",Sales,Mon - Fri Remonte Tues,Court Street Office (Zone 1)
+"Cappelli, Patricia A",Sales,Mon - Fri Remote Thurs,Court Street Office (Zone 1)
+"DiCicco, Julia",Sales,Mon - Fri,Court Street Office (Zone 1)
+"Hilty, Alicia Nicole",Sales,Mon - Fri Remote Mon,Court Street Office (Zone 1)
+"Freeman, Emily",Sales,Mon - Fri Remote Tues,Court Street Office (Zone 1)
+"Lalone, Francis",Sales,Mon - Fri Remote Mon,Court Street Office (Zone 1)
+"Greenwood, Amber M",Sales,Mon - Fri Remote Fri,Court Street Office (Zone 1)
+"Malagisi, Jill K",Sales,Mon - Fri Remote Fri,Court Street Office (Zone 1)
+"Minnegan, Thomas J",Sales,Tues & Thurs,Court Street Office (Zone 1)
+"Shute, Stephanie N",Sales,Mon - Fri Remote Wed,Court Street Office (Zone 1)
+"Vanhorn, Dale",Sales,Mon - Fri Remote Mon & Fri,Court Street Office (Zone 1)
+"Cannella, James R",Purchasing,Mon - Fri.,Court Street Office (Zone 1)
+"Davis, Bradley P.",Purchasing,Mon - Fri Remote Thurs(Not Weekly),Court Street Office (Zone 1)
+"Dziok, Lisa",Purchasing,Mon - Fri Remote Mon,Court Street Office (Zone 1)
+"Jackson, Jordan",Purchasing,Mon - Fri Remote Fri,Court Street Office (Zone 1)
+"Kemp, Steven",Purchasing,Mon - Fri,Court Street Office (Zone 1)
+"Knapp, Ryan",Purchasing,Mon - Fri Remote Wed,Court Street Office (Zone 1)
+"MacBride-Matthews, Lisa",Purchasing,Mon - Fri Remote Thurs,Court Street Office (Zone 1)
+"Nicholson, Ruth",Purchasing,Mon - Fri Remote Mon,Court Street Office (Zone 1)
+"Rosbrook, Jenna",Purchasing,Mon - Fri Remote Mon,Court Street Office (Zone 1)
+"Sickles, Todd",Purchasing,Mon - Fri,Court Street Office (Zone 1)
+"Thomas, Andrew M",Purchasing,Mon - Fri,Court Street Office (Zone 1)
+"Browne, Alexander",Transportation Manager,Mon - Fri,Court Street Office (Zone 1)
+"Capsello, Greg",Transportation Coordinator,Mon - Fri,Court Street Office (Zone 1)
+"Jaeger, Laura",Food Safety Specialist,Mon - Fri,Court Street Office (Zone 1)
+"Berry, Jeff",Lead Delivery Driver,Intermittent,Court Street Office (Zone 1)
+"Mowers, Brett M",Director of Compliance,Mon - Fri,Court Street Office (Zone 1)
+"Berda, Jeff",Inventory Control Manager,Mon - Fri,Court Street Office (Zone 1)
+"Manz, Marcus",Warehouse Operations Manager,Mon - Fri,Court Street Warehouse (Zone 2)
+"Reed, Larry",Warehouse Manager,Mon - Fri,Court Street Warehouse (Zone 2)
+"Bourlier, David",Inventory Control Specialist,Mon - Fri,Court Street Warehouse (Zone 2)
+"Tilton, Scott",Inventory Control Specialist,Mon - Fri,Court Street Warehouse (Zone 2)
+"Bell, James M",Warehouse First Shift,Mon - Fri,Court Street Warehouse (Zone 2)
+"Buccina, Mark",Production Team Lead,Mon - Fri,Court Street Warehouse (Zone 2)
+"Burkert, Kyle",Production,Mon - Fri,Court Street Warehouse (Zone 2)
+"Clarke, Christopher",Warehouse First Shift,Mon - Fri,Court Street Warehouse (Zone 2)
+"Conners, Jason",Warehouse First Shift,Mon - Thurs,Court Street Warehouse (Zone 2)
+"Cooper, Michael",Warehouse First Shift,Mon - Fri,Court Street Warehouse (Zone 2)
+"Cummings, Russell",Warehouse First Shift,Sun - Wed,Court Street Warehouse (Zone 2)
+"Foster, Jeffrey",Warehouse First Shift Lead,Wed - Sat,Court Street Warehouse (Zone 2)
+"Grems, Anthony",Warehouse First Shift,Mon - Fri,Court Street Warehouse (Zone 2)
+"Ibrahim, Edres",Warehouse First Shift,"Tues, Thurs, Fri, Sat",Court Street Warehouse (Zone 2)
+"Jahe, Win",Warehouse First Shift,Mon - Fri,Court Street Warehouse (Zone 2)
+"LaLone, Alex",Warehouse First Shift,Mon - Fri,Court Street Warehouse (Zone 2)
+"Lawson, Alex J",Warehouse First Shift,Mon - Fri,Court Street Warehouse (Zone 2)
+"Marketos, Crystal",Production,Mon - Fri,Court Street Warehouse (Zone 2)
+"McGee, Chris",Warehouse First Shift,Mon - Fri,Court Street Warehouse (Zone 2)
+"Monds, Kevin",Warehouse First Shift,Mon - Fri,Court Street Warehouse (Zone 2)
+"Reddish, Rickie",Warehouse First Shift,Mon - Fri,Court Street Warehouse (Zone 2)
+"Reynolds, Aaron",Warehouse First Shift Lead,"Sun, Mon, Tues, Fri",Court Street Warehouse (Zone 2)
+"Rivera, Christina M",Warehouse First Shift,Sun - Wed,Court Street Warehouse (Zone 2)
+"Rhode, Brandon",Warehouse First Shift,Mon - Fri,Court Street Warehouse (Zone 2)
+"Severance, Jeffery",Warehouse First Shift,Mon - Fri,Court Street Warehouse (Zone 2)
+"Thomas, Trevor E.",Warehouse First Shift,Sat & Sun,Court Street Warehouse (Zone 2)
+"Trumble, Desirae",Warehouse First Shift,"Mon, Wed, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Velazquez, Eliezer",Warehouse First Shift,"Sun, Wed, Thurs, Fri",Court Street Warehouse (Zone 2)
+"Whitt, Kalob",Warehouse First Shift,Sun - Wed,Court Street Warehouse (Zone 2)
+"Woodworth-Day, Abryelle",Warehouse First Shift,Mon - Fri,Court Street Warehouse (Zone 2)
+"Messere, Jeremy",Maintenance Supervisor,Multi-Site,Court Street Warehouse (Zone 2)
+"Barbour, Ali",Facilities Technician,Multi-Site,Court Street Warehouse (Zone 2)
+"Mautz, Gilbert",Facilities Technician,Multi-Site,Court Street Warehouse (Zone 2)
+"Fogg, Dennis",1st Shift Sanitation,Sun - Thurs,Court Street Warehouse (Zone 2)
+"Jackson, Kaseam",1st Shift Sanitation,Mon - Fri,Court Street Warehouse (Zone 2)
+"Abdullah, Mohammed",Warehouse Second Shift,"Tues, Wed, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Ahmad, Hussein",Warehouse Second Shift,"Mon, Wed, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Ahmadi, Anosh",Warehouse Second Shift,Sun - Thurs,Court Street Warehouse (Zone 2)
+"Aladawi, Omran",Warehouse Second Shift,"Sun, Mon, Wed, Thurs",Court Street Warehouse (Zone 2)
+"Amisi, Songolo",Warehouse Second Shift,"Sun, Tues, Wed, Thurs",Court Street Warehouse (Zone 2)
+"Anaya Rondon, Luis",Warehouse Second Shift,Sun - Thurs,Court Street Warehouse (Zone 2)
+"Aung, Thein",Warehouse Second Shift,"Tues, Wed, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Bartolotta, Anthony",Warehouse Second Shift,"Sun, Tues, Wed, Thurs",Court Street Warehouse (Zone 2)
+"Barzee, Justin",Warehouse Second Shift,Tues- Thurs & Sat,Court Street Warehouse (Zone 2)
+"Ble, Hsa",Warehouse Second Shift,"Sun, Mon, Tues, Sat",Court Street Warehouse (Zone 2)
+"Caiza, Yessenia",Warehouse Second Shift,"Sun, Tues, Wed, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Dansby, Miranda",Warehouse Second Shift,"Sun, Mon, Wed, Thurs",Court Street Warehouse (Zone 2)
+"Dawrani, Sanawullah",Warehouse Second Shift,"Sun, Mon, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Diaz, Dayron",Warehouse Second Shift,"Sun, Mon, Tues, Thurs",Court Street Warehouse (Zone 2)
+"Ebuela, Tresor",Warehouse Second Shift,"Tues, Wed, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Georges, James",Warehouse Second Shift Lead,Tues - Thurs & Sat,Court Street Warehouse (Zone 2)
+"Gomez Ortega, Dioni",Warehouse Second Shift,"Tues, Wed, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Gomez Ortega, Diobi",Warehouse Second Shift,"Tues, Wed, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Gomez Rosabal, Marielys",Warehouse Second Shift,"Tues, Wed, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Hakimi, Mohammad",Warehouse Second Shift,Sun - Thurs,Court Street Warehouse (Zone 2)
+"Hartung IV, Andrew F",Warehouse Second Shift Lead,Mon - Wed & Sat,Court Street Warehouse (Zone 2)
+"Hiderashko, Vladyslav",Warehouse Second Shift,"Sun, Mon, Wed, Thurs",Court Street Warehouse (Zone 2)
+"Hiraldo, Olga",Warehouse Second Shift,Sun - Thurs,Court Street Warehouse (Zone 2)
+"Holmes, Soriah",Warehouse Second Shift,Mon - Thurs,Court Street Warehouse (Zone 2)
+"Humeniuk, Volodymyr",Warehouse Second Shift,"Sun, Mon, Tues, Thurs",Court Street Warehouse (Zone 2)
+"Ismail Haroun, Oussam Ahamat",Warehouse Second Shift,"Tues, Wed, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Karangwa, Vincent",Warehouse Second Shift,Sun - Thurs,Court Street Warehouse (Zone 2)
+"Khalil, Wahidullah",Warehouse Second Shift,"Sun, Tues, Sat",Court Street Warehouse (Zone 2)
+"Looby, Brendan",Warehouse Second Shift,Sun - Wed,Court Street Warehouse (Zone 2)
+"Manan, Qauomi Abdul",Warehouse Second Shift,"Sun, Mon, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Mari, Toli",Warehouse Second Shift,Sun - Wed,Court Street Warehouse (Zone 2)
+"Mark, Vicky",Warehouse Second Shift,Sun - Thurs,Court Street Warehouse (Zone 2)
+"Marrero Fonseca, Alberto",Warehouse Second Shift,"Tues, Wed, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Mendoza Perez, Angel",Warehouse Second Shift,Mon - Thurs,Court Street Warehouse (Zone 2)
+"Mohamad Khalil, Mostafa",Warehouse Second Shift,"Mon, Wed, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Mohammadi, Sonil",Warehouse Second Shift,"Sun, Mon, Sat",Court Street Warehouse (Zone 2)
+"Mtembwa, Mboko",Warehouse Second Shift,Sun - Wed,Court Street Warehouse (Zone 2)
+"Mukhi, Shukrullah",Warehouse Second Shift,"Sun, Mon, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Muradi, Azizullah",Warehouse Second Shift,Sun - Thurs,Court Street Warehouse (Zone 2)
+"Muradi, Abdul",Warehouse Second Shift,"Sun, Mon, Wed, Thurs",Court Street Warehouse (Zone 2)
+"Murray, Patrick J",Warehouse Second Shift,Sun - Wed,Court Street Warehouse (Zone 2)
+"Narvaez Rodriguez, Adoniesis",Warehouse Second Shift,"Sun, Tues, Wed, Thurs",Court Street Warehouse (Zone 2)
+"Nazari, Najebullah",Warehouse Second Shift,"Sun, Mon, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Niyongabo, Jean",Warehouse Second Shift,Sun - Wed,Court Street Warehouse (Zone 2)
+"Rahmani, Amir Mohammad",Warehouse Second Shift,Sun - Wed,Court Street Warehouse (Zone 2)
+"Rahmani, Juma Khan",Warehouse Second Shift,"Sun, Mon, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Rodriguez, Leodan",Warehouse Second Shift,"Tues, Wed, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Rodriguez, Deyaneira",Warehouse Second Shift Lead,Sun - Wed,Court Street Warehouse (Zone 2)
+"Rwanika, Enock",Warehouse Second Shift,"Sun, Tues, Wed, Thurs",Court Street Warehouse (Zone 2)
+"sah nitcheu, Pierre Marie",Warehouse Second Shift,Sun - Wed,Court Street Warehouse (Zone 2)
+"Sheerzad, Nurullah",Warehouse Second Shift,"Sun, Mon, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Silveira Zamora, Roberto",Warehouse Second Shift,"Tues, Wed, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Thomas Diaz, Edgar",Warehouse Second Shift,Sun - Wed,Court Street Warehouse (Zone 2)
+"Toaquiza, Lupe",Warehouse Second Shift,"Sun, Tues, Wed, Thurs",Court Street Warehouse (Zone 2)
+"Uwizeyimana, Deogene",Warehouse Second Shift,"Sun, Tues, Wed, Thurs",Court Street Warehouse (Zone 2)
+"Vega, Leidy",Warehouse Second Shift,"Sun, Tues, Wed, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Vives Almeida, Lazaro",Warehouse Second Shift,Sun - Wed,Court Street Warehouse (Zone 2)
+"Williams, Kyon",Warehouse Second Shift,"Tues, Wed, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Abdi, Mohamed",2nd Shift Sanitation,"Mon, Tues, Wed, Thurs, Sat",Court Street Warehouse (Zone 2)
+"Kamwanya, Fyfy",2nd Shift Sanitation,Sun - Thurs,Court Street Warehouse (Zone 2)
+"Wickard, Tobias",Freezer Manager,Mon - Fri,RV Frozen
+"Sidmore, Peter J",Freezer Team Lead,Mon - Fri,RV Frozen
+"Daniel, Eric",Freezer 2nd Shift Team Lead,"Sun, Tues, Wed, Thurs",RV Frozen
+"Arocho, Teresa",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Bell, Robert W",Frozen Warehouse,Mon - Fri,RV Frozen
+"Burden, Dustin",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Dishaw, Anthony",Frozen Warehouse,Sun - Thurs,RV Frozen
+"Ferguson, Lila",Frozen Warehouse,Mon - Fri,RV Frozen
+"Fletcher, Shawn",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Ford, Kyle",Frozen Warehouse,Mon - Fri,RV Frozen
+"Garn, Jason",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Hatton, Shawn",Frozen Warehouse,Mon - Fri,RV Frozen
+"Hemingway, John",Frozen Warehouse,Sun - Thurs,RV Frozen
+"Hertel, Eric",Frozen Warehouse,Mon - Fri,RV Frozen
+"Humure, Nkurunziza",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Ibrahim, Bajhat",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Igirimbabazi, Grace",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Jackson, Tyrone",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Jeannine, Mutesi",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Kirby, Morrell",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Leone, William",Frozen Warehouse,Sun - Thurs,RV Frozen
+"Lewis, McCoy",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Lozano Garcia, Adanelis",Frozen Warehouse,Mon - Fri,RV Frozen
+"Mannino, Jordan",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Martin, Kylia",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Martinez, Maria",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Michels, Mark",Frozen Warehouse,Sun - Thurs,RV Frozen
+"Mugabushaka, Alphonse",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Ndebay, Salay",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Niyonkwizerwa, Faustin",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Nkubana, Dina",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Paternoster, Tim",Frozen Warehouse,Mon - Fri,RV Frozen
+"Platts, Tanyshia",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Roberts, Byron",Frozen Warehouse,Sun - Thurs,RV Frozen
+"Scott, Charles",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Shukuru, Germain",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Solange, Dorcas",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Soto Velazquez, Rahisha",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Spaulding, Josh",Frozen Warehouse,Sun - Thurs,RV Frozen
+"Stienburg, Andrew",Frozen Warehouse,Sun - Thurs,RV Frozen
+"Stienburg, Alexander",Frozen Warehouse,Sun - Thurs,RV Frozen
+"Sullivan, James",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Sweet, Ryan",Frozen Warehouse,Mon - Fri,RV Frozen
+"Torres, Thomas",Frozen Warehouse,Sun - Thurs,RV Frozen
+"Uwajeneza, Seraphine",Frozen Warehouse,"Sun, Tues, Wed, Thurs",RV Frozen
+"Redmond, John",Executive,Intermittent,Firestone Office
+"Thompson, Devin",Business Analyst,Mon - Fri Remote Fri,Firestone Office
+"White, Jane",Financial Controller,Intermittent,Firestone Office
+"Beach, Lori",AR Specialist,Mon. - Fri.,Firestone Office
+"Burdick-Kerns, Autumne",AR Specialist,Mon. - Fri.,Firestone Office
+"Daniels, Kaylee",AP Specialist,Mon. - Fri.,Firestone Office
+"Dawson, Lisa",AP Specialist,Mon. - Fri.,Firestone Office
+"Hallett, Patricia J",AP Specialist,Tues - Thurs,Firestone Office
+"Hubbard, Carolyn Frances",AP Specialist,Mon. - Fri.,Firestone Office
+"Indick, Michele",AP Specialist,Mon. - Fri.,Firestone Office
+"Matasar, Hillel",Staff Accountant,Mon. - Fri.,Firestone Office
+"Mitchell, Patricia",AP Specialist,Mon. - Fri.,Firestone Office
+"Morgan, Melissa",Senior Accountant,Mon. - Fri. Remote Wed,Firestone Office
+"Penoyer, Amy",AR Specialist,Mon. - Fri.,Firestone Office
+"Werth, Adam J",Clerical Specialist,Tuesdays,Firestone Office
+"Capozzi, Michael",IT,Mon - Fri,Firestone Office
+"Hackworth, Adolphus",IT,Intermittent,Firestone Office
+"LaPoint, Brandon",IT,Mon - Fri,Firestone Office
+"Robertson, Orlando",IT,Mon - Fri,Firestone Office
+"Wheelock, Glenn",IT,Mon - Fri,Firestone Office
+"Kopack, John",Purchasing/Logistics,Mon. - Fri. Remote Mon,Firestone Office
+"Reid, Mike",Purchasing/Logistics,Mon. - Fri. Remote Tues,Firestone Office
+Derek Fuss,Health & Wellness Manager,Mon - Fri,H&W
+"Ayubu, Abdurdhim",Health & Wellness Team,"Sun, Mon, Wed, Sat",H&W
+"Bomboko, Alphonse",Health & Wellness Team,"Tues, Wed, Thurs, Sat",H&W
+"Bradt, Natasha",Health & Wellness Team,"Mon, Tues, Wed, Sat",H&W
+"Brown, Frederick",Health & Wellness Team,"Wed, Thurs, Fri, Sat",H&W
+"Gamble, Richard C",Health & Wellness Team Lead,"Tues, Wed, Thurs, Sat",H&W
+"Griffin, Adam",Health & Wellness Team,"Sun, Mon, Wed, Thurs",H&W
+"Hashim, Mohammed",Health & Wellness Team,"Mon, Tues, Thurs, Sat",H&W
+"Hatch, James",Health & Wellness Team,Mon - Fri,H&W
+"Ingabire, Chantal",Health & Wellness Team,"Tues, Wed, Thurs, Sat",H&W
+Joseph Minouche,Health & Wellness Team,"Sun, Tues, Wed, Thurs",H&W
+"Kielb, Caitlyn",Health & Wellness Team Lead,Mon - Fri,H&W
+"Koko, Joshua",Health & Wellness Team,"Sun, Mon, Wed, Thurs",H&W
+"McClure, Kane",Health & Wellness Team,"Sun, Mon, Tues, Thurs",H&W
+"Mtumwa, Chance",Health & Wellness Team,"Sun, Mon, Wed, Thurs",H&W
+"Mudagohokora, Oswaridi",Health & Wellness Team,"Sun, Mon, Wed, Thurs",H&W
+"Nicolucci, Julie",Health & Wellness Team,Tues - Thurs & Sat,H&W
+"Rem, Mykhailo",Health & Wellness Team,"Sun, Mon, Tues, Sat",H&W
+"Saya, Sabastiano",Health & Wellness Team,"Sun, Mon, Wed, Thurs",H&W
+"Tyson, Tyger",Health & Wellness Team,"Sun, Mon, Tues, Thurs",H&W
+"Ullah, Anayat",Health & Wellness Team,"Sun, Tues, Wed, Thurs",H&W
